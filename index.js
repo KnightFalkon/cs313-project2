@@ -28,7 +28,8 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => res.render('pages/index'))
 
 app.get('/createPerson', function(request, response) {
-	createPerson(request, response);
+  createPerson(request, response);
+  response.render('<h2>it worked!</h2>');
 });
 
 app.get('/getPerson', function(request, response) {
