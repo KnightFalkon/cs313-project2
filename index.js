@@ -86,7 +86,7 @@ function createPersonOnDb(username, password, name, street, city, state, zip, ca
 		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
     // var params = [id];
     
-    var sql = "INSERT INTO users (username, hash, name, street, city, state, zip, cardNum) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+    var sql = "INSERT INTO users (username, password, name, street, city, state, zip, cardNum) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
 		var params = [username, password, name, street, city, state, zip, cardNum];
 
 		var query = client.query(sql, params, function(err, result) {
