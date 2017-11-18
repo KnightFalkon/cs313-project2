@@ -46,10 +46,10 @@ function createPerson(request, response) {
   var zip = request.query.zip;
   var cardNum = request.query.cardNum;
 
-  hash = bcrypt.hashSync(password, 10);
+  password = bcrypt.hashSync(password, 10);
 
 	// use a helper function to query the DB, and provide a callback for when it's done
-	createPersonOnDb(username, hash, name, street, city, state, zip, cardNum, function(error, result) {
+	createPersonOnDb(username, password, name, street, city, state, zip, cardNum, function(error, result) {
 		// This is the callback function that will be called when the DB is done.
 		// The job here is just to send it back.
 
@@ -64,7 +64,7 @@ function createPerson(request, response) {
 	});
 }
 
-function createPersonOnDb(username, hash, name, street, city, state, zip, cardNum, callback) {
+function createPersonOnDb(username, password, name, street, city, state, zip, cardNum, callback) {
 	//console.log("creating person on DB with id: " + id);
 
 	const client = new Client({
@@ -83,7 +83,7 @@ function createPersonOnDb(username, hash, name, street, city, state, zip, cardNu
     // var params = [id];
     
     var sql = "INSERT INTO users (username, hash, name, street, city, state, zip, cardNum) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-		var params = [username, hash, name, street, city, state, zip, cardNum];
+		var params = [username, password, name, street, city, state, zip, cardNum];
 
 		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB, disconnect the client
