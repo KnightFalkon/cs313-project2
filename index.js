@@ -256,19 +256,17 @@ function updatePersonOnDb(id, name, street, city, state, zip, cardNum, callback)
 
 function createGame(request, response) {
 	// First get the person's id
-  var username = request.query.username;
-  var password = request.query.password;
-  var name = request.query.name;
-  var street = request.query.street;
-  var city = request.query.city;
-  var state = request.query.state;
-  var zip = request.query.zip;
-  var cardNum = request.query.cardNum;
-
-  password = bcrypt.hashSync(password, 10);
+  var title = request.query.title;
+  var rating = request.query.rating;
+  var msrb = request.query.msrb;
+  var stock = request.query.stock;
+  var buyPrice = request.query.sellPrice * .2;
+  var sellPrice = request.query.sellPrice;
+  var picture = request.query.picture;
+  var description = request.query.description;
 
 	// use a helper function to query the DB, and provide a callback for when it's done
-	createGameOnDb(username, password, name, street, city, state, zip, cardNum, function(error, result) {
+	createGameOnDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, function(error, result) {
 		// This is the callback function that will be called when the DB is done.
 		// The job here is just to send it back.
 
@@ -283,7 +281,7 @@ function createGame(request, response) {
 	});
 }
 
-function createGameOnDb(username, password, name, street, city, state, zip, cardNum, callback) {
+function createGameOnDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, callback) {
 	//console.log("creating person on DB with id: " + id);
 
 	const client = new Client({
@@ -301,8 +299,8 @@ function createGameOnDb(username, password, name, street, city, state, zip, card
 		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
     // var params = [id];
     
-    var sql = "INSERT INTO users (username, password, name, street, city, state, zip, card_num) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-		var params = [username, password, name, street, city, state, zip, cardNum];
+    var sql = "INSERT INTO games (title, rating, msrb, stock, buy_price, sell_price, picture, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+		var params = [title, rating, msrb, stock, buyPrice, sellPrice, picture, description];
 
 		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB, disconnect the client
