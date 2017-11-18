@@ -37,7 +37,13 @@ app.get('/getPerson', function(request, response) {
 });
 
 app.get('/updatePerson', function(request, response) {
-	updatePerson(request, response);
+  updatePerson(request, response);
+  response.render('pages/it_worked');  
+});
+
+app.get('/createGame', function(request, response) {
+  createGame(request, response);
+  response.render('pages/it_worked');
 });
 
 app.listen(app.get('port'), function() {
@@ -189,7 +195,7 @@ function updatePerson(request, response) {
   var cardNum = request.query.cardNum;
 
 	// use a helper function to query the DB, and provide a callback for when it's done
-	createPersonOnDb(id, name, street, city, state, zip, cardNum, function(error, result) {
+	updatePersonOnDb(id, name, street, city, state, zip, cardNum, function(error, result) {
 		// This is the callback function that will be called when the DB is done.
 		// The job here is just to send it back.
 
@@ -204,7 +210,7 @@ function updatePerson(request, response) {
 	});
 }
 
-function createPersonOnDb(id, name, street, city, state, zip, cardNum, callback) {
+function updatePersonOnDb(id, name, street, city, state, zip, cardNum, callback) {
 	//console.log("creating person on DB with id: " + id);
 
 	const client = new Client({
@@ -245,3 +251,76 @@ function createPersonOnDb(id, name, street, city, state, zip, cardNum, callback)
 	});
 
 } // end of getPersonFromDb
+
+
+
+function createGame(request, response) {
+	// First get the person's id
+  var username = request.query.username;
+  var password = request.query.password;
+  var name = request.query.name;
+  var street = request.query.street;
+  var city = request.query.city;
+  var state = request.query.state;
+  var zip = request.query.zip;
+  var cardNum = request.query.cardNum;
+
+  password = bcrypt.hashSync(password, 10);
+
+	// use a helper function to query the DB, and provide a callback for when it's done
+	createGameOnDb(username, password, name, street, city, state, zip, cardNum, function(error, result) {
+		// This is the callback function that will be called when the DB is done.
+		// The job here is just to send it back.
+
+		// Make sure we got a row with the person, then prepare JSON to send back
+		// if (error || result == null || result.length != 1) {
+		// 	response.status(500).json({success: false, data: error});
+		// } else {
+		// 	var person = result[0];
+		// 	response.status(200).json(result[0]);
+    // }
+    console.log("user created");
+	});
+}
+
+function createGameOnDb(username, password, name, street, city, state, zip, cardNum, callback) {
+	//console.log("creating person on DB with id: " + id);
+
+	const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
+
+	client.connect(function(err) {
+		if (err) {
+			console.log("Error connecting to DB: ")
+			console.log(err);
+			callback(err, null);
+		}
+
+		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
+    // var params = [id];
+    
+    var sql = "INSERT INTO users (username, password, name, street, city, state, zip, card_num) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+		var params = [username, password, name, street, city, state, zip, cardNum];
+
+		var query = client.query(sql, params, function(err, result) {
+			// we are now done getting the data from the DB, disconnect the client
+			client.end(function(err) {
+				if (err) throw err;
+			});
+
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+
+			//console.log("Found result: " + JSON.stringify(result.rows));
+
+			// logs whether it was successful
+			callback(null, "success");
+		});
+	});
+
+} // end of CreatePersonFromDb
