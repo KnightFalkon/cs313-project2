@@ -299,7 +299,7 @@ function createGameOnDb(title, rating, msrb, stock, buyPrice, sellPrice, picture
 		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
     // var params = [id];
     
-    var sql = "INSERT INTO games (title, rating, msrb, stock, buy_price, sell_price, picture, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+    var sql = "INSERT INTO games (name, rating, msrb, stock, buy_price, sell_price, picture, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
 		var params = [title, rating, msrb, stock, buyPrice, sellPrice, picture, description];
 
 		var query = client.query(sql, params, function(err, result) {
