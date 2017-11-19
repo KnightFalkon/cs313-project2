@@ -62,6 +62,12 @@ app.get('/soldStock', function(request, response) {
   response.render('pages/it_worked');
 });
 
+app.get('/createTransaction', function(request, response) {
+  createTransaction(request, response);
+  response.render('pages/it_worked');
+});
+
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
@@ -412,7 +418,7 @@ function updateStock(request, response) {
   var stock = request.query.stock;
 
 	// use a helper function to query the DB, and provide a callback for when it's done
-	updateStockOnDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, function(error, result) {
+	updateStockOnDb(game_id, stock, function(error, result) {
 		// This is the callback function that will be called when the DB is done.
 		// The job here is just to send it back.
 
@@ -427,7 +433,7 @@ function updateStock(request, response) {
 	});
 }
 
-function updateStockOnDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, callback) {
+function updateStockOnDb(game_id, stock, callback) {
 	//console.log("creating person on DB with id: " + id);
 
 	const client = new Client({
@@ -445,8 +451,8 @@ function updateStockOnDb(title, rating, msrb, stock, buyPrice, sellPrice, pictur
 		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
     // var params = [id];
     
-    var sql = "INSERT INTO games (name, rating, msrb, stock, buy_price, sell_price, picture, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-		var params = [title, rating, msrb, stock, buyPrice, sellPrice, picture, description];
+    var sql = "UPDATE games SET stock = $1 WHERE id = $2";
+		var params = [stock, game_id];
 
 		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB, disconnect the client
