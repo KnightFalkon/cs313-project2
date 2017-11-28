@@ -6,24 +6,38 @@
     <% include ../partials/header.ejs %>
 
     <script>
-      function addToCart(value) {
+      function loadGames() {
 
-        // $.ajax({
-        //   type: "POST",
-        //   url: 'addItem.php',
-        //   data: {
-        //     value : value,
-        //   },
-        //   success: function(response) {
-        //     console.log(response);
-        //   }
-        // });
+        //do an ajax
+        $.get('/getGames',
+        NULL,
+        function callback(data, status) {
+        //when the thing comes back, update the DOM. 
+        if (status != 'success') {
+          console.log(status);
+        } else {
+          updateGames(data);
+            
+        }
+      });
+      }
+
+      function updateGames(data) {
+        if (data && data.length > 0) {
+        var resultList = $("#games");
+        resultList.empty();
+
+        for (var i = 0; i < data.length; i++) {
+          var title = data[i].Title;
+          resultList.append("<li><p>" + title + "</p></li>");
+        }
+      }
       }
     </script>
 
   </head>
 
-  <body>
+  <body onload="loadGames()">
 
     <header>
       <h1 class="text-center title"> <span class="red">Rager</span>Gamer</h1></br>
@@ -40,17 +54,7 @@
       <hr class="thick">
 
     </header>
-
-    <%= result[0].title %>
-
-    <% for(let i = 0; i < result.length; i++) { %>
-        <div class="col-xs-12 text-center">
-          <div class="row pad">
-            <img src="<%= result[i].picture %>" alt="<%= result[i].name %>" height="270" width="480" class="img-responsive center-block">
-            <button>Buy <%= result[i].title %></button>
-          </div>
-        </div>
-    <% } %>
+    <div id="games"></div>
 
     <!--?php
       $statement = $db->prepare("SELECT name, picture FROM games");

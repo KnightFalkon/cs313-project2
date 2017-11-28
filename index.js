@@ -413,14 +413,6 @@ app.get('/getGames', function(request, response) {
 
 function getGames(request, response) {
 	// First get the person's id
-  var title = request.query.title;
-  var rating = request.query.rating;
-  var msrb = request.query.msrb;
-  var stock = request.query.stock;
-  var buyPrice = request.query.sellPrice * .2;
-  var sellPrice = request.query.sellPrice;
-  var picture = request.query.picture;
-  var description = request.query.description;
 
 	// use a helper function to query the DB, and provide a callback for when it's done
 	getGamesFromDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, function(error, result) {
