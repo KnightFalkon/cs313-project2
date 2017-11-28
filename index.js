@@ -46,46 +46,6 @@ app.get('/createPerson', function(request, response) {
   response.render('pages/it_worked');
 });
 
-app.get('/getPerson', function(request, response) {
-	getPerson(request, response);
-});
-
-app.get('/updatePerson', function(request, response) {
-  updatePerson(request, response);
-  response.render('pages/it_worked');  
-});
-
-app.get('/updatePassword', function(request, response) {
-  updatePassword(request, response);
-  response.render('pages/it_worked');
-});
-
-app.get('/createGame', function(request, response) {
-  createGame(request, response);
-  response.render('pages/it_worked');
-});
-
-app.get('/boughtStock', function(request, response) {
-  updateStock(request, response);
-  response.render('pages/it_worked');
-});
-
-app.get('/soldStock', function(request, response) {
-  request.query.stock *= (-1);
-  updateStock(request, response);
-  response.render('pages/it_worked');
-});
-
-app.get('/createTransaction', function(request, response) {
-  createTransaction(request, response);
-  response.render('pages/it_worked');
-});
-
-
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
-
 function createPerson(request, response) {
 	// First get the person's id
   var username = request.query.username;
@@ -157,6 +117,11 @@ function createPersonOnDb(username, password, name, street, city, state, zip, ca
 
 } // end of CreatePersonFromDb
 
+
+app.get('/getPerson', function(request, response) {
+	getPerson(request, response);
+});
+
 function getPerson(request, response) {
 	// First get the person's id
 	var id = request.query.id;
@@ -218,6 +183,11 @@ function getPersonFromDb(id, callback) {
 
 } // end of getPersonFromDb
 
+
+app.get('/updatePerson', function(request, response) {
+  updatePerson(request, response);
+  response.render('pages/it_worked');  
+});
 
 function updatePerson(request, response) {
   // First get the person's id
@@ -288,6 +258,12 @@ function updatePersonOnDb(id, name, street, city, state, zip, cardNum, callback)
 
 } // end of updatePersonOnDb
 
+
+app.get('/updatePassword', function(request, response) {
+  updatePassword(request, response);
+  response.render('pages/it_worked');
+});
+
 function updatePassword(request, response) {
   // First get the person's id
   
@@ -356,6 +332,10 @@ function updatePasswordOnDb(id, name, street, city, state, zip, cardNum, callbac
 } // end of getPersonFromDb
 
 
+app.get('/createGame', function(request, response) {
+  createGame(request, response);
+  response.render('pages/it_worked');
+});
 
 function createGame(request, response) {
 	// First get the person's id
@@ -426,6 +406,92 @@ function createGameOnDb(title, rating, msrb, stock, buyPrice, sellPrice, picture
 
 } // end of CreatePersonFromDb
 
+app.get('/getGames', function(request, response) {
+  createGame(request, response);
+  response.render('pages/it_worked');
+});
+
+function getGames(request, response) {
+	// First get the person's id
+  var title = request.query.title;
+  var rating = request.query.rating;
+  var msrb = request.query.msrb;
+  var stock = request.query.stock;
+  var buyPrice = request.query.sellPrice * .2;
+  var sellPrice = request.query.sellPrice;
+  var picture = request.query.picture;
+  var description = request.query.description;
+
+	// use a helper function to query the DB, and provide a callback for when it's done
+	getGamesFromDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, function(error, result) {
+		// This is the callback function that will be called when the DB is done.
+		// The job here is just to send it back.
+
+		// Make sure we got a rows with games, then prepare JSON to send back
+		if (error || result == null || result.length != 1) {
+			response.status(500).json({success: false, data: error});
+		} else {
+			//var person = result[0];
+			response.status(200).json(result);
+    }
+    console.log("games have been retreived");
+	});
+}
+
+function getGamesFromDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, callback) {
+	//console.log("creating person on DB with id: " + id);
+
+	const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
+
+	client.connect(function(err) {
+		if (err) {
+			console.log("Error connecting to DB: ")
+			console.log(err);
+			callback(err, null);
+		}
+
+		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
+    // var params = [id];
+    
+    var sql = "SELECT name, rating, msrb, stock, buy_price, sell_price, picture, description FROM games WHERE stock > 0";
+		var params = [title, rating, msrb, stock, buyPrice, sellPrice, picture, description];
+
+		var query = client.query(sql, params, function(err, result) {
+			// we are now done getting the data from the DB, disconnect the client
+			client.end(function(err) {
+				if (err) throw err;
+			});
+
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+
+			//console.log("Found result: " + JSON.stringify(result.rows));
+
+			// logs whether it was successful
+			callback(null, result.rows);
+		});
+	});
+
+} // end of CreatePersonFromDb
+
+
+app.get('/boughtStock', function(request, response) {
+  updateStock(request, response);
+  response.render('pages/it_worked');
+});
+
+app.get('/soldStock', function(request, response) {
+  request.query.stock *= (-1);
+  updateStock(request, response);
+  response.render('pages/it_worked');
+});
+
 function updateStock(request, response) {
   // First get the person's id
   var game_id = request.query.game_id;
@@ -488,6 +554,11 @@ function updateStockOnDb(game_id, stock, callback) {
 	});
 
 } // end of CreatePersonFromDb
+
+app.get('/createTransaction', function(request, response) {
+  createTransaction(request, response);
+  response.render('pages/it_worked');
+});
 
 function createTransaction(request, response) {
 	// First get the person's id
@@ -553,3 +624,8 @@ function createTransactionOnDb(user_id, game_id, date, callback) {
 	});
 
 } // end of CreatePersonFromDb
+
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
