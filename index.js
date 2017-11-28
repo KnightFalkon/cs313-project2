@@ -34,7 +34,8 @@ app.get('/checkout', (req,res) => res.render('pages/checkout'))
 app.get('/signin', (req,res) => res.render('pages/signin'))
 app.get('/signup', (req,res) => res.render('pages/signup'))
 app.get('/updateInfo', (req,res) => res.render('pages/updateInfo'))
-app.get('/css', (req,res) => res.render('pages/browse.css'))
+app.get('/confirm', (req,res) => res.render('pages/confirm'))
+
 
 
 
