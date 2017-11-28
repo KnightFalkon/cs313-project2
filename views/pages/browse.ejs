@@ -41,7 +41,9 @@
 
     </header>
 
-    <% for(let i = 0; i < posts.length; i++) { %>
+    <%= result[0].title %>
+
+    <% for(let i = 0; i < result.length; i++) { %>
         <div class="col-xs-12 text-center">
           <div class="row pad">
             <img src="<%= result[i].picture %>" alt="<%= result[i].name %>" height="270" width="480" class="img-responsive center-block">
