@@ -26,6 +26,17 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.render('pages/index'))
+app.get('/browse', (req,res) => res.render('pages/browse'))
+app.get('/cart', (req,res) => res.render('pages/cart'))
+app.get('/checkout', (req,res) => res.render('pages/checkout'))
+app.get('/account', (req,res) => res.render('pages/account'))
+app.get('/checkout', (req,res) => res.render('pages/checkout'))
+app.get('/signin', (req,res) => res.render('pages/signin'))
+app.get('/signup', (req,res) => res.render('pages/signup'))
+app.get('/updateInfo', (req,res) => res.render('pages/updateInfo'))
+
+
+
 
 app.get('/createPerson', function(request, response) {
   createPerson(request, response);
