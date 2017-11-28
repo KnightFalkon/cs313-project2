@@ -10,16 +10,15 @@
 
         //do an ajax
         $.get('/getGames',
-        NULL,
-        function callback(data, status) {
-        //when the thing comes back, update the DOM. 
-        if (status != 'success') {
-          console.log(status);
-        } else {
-          updateGames(data);
-            
-        }
-      });
+          0,
+          function callback(data, status) {
+          //when the thing comes back, update the DOM. 
+          if (status != 'success') {
+            console.log(status);
+          } else {
+            updateGames(data);
+          }
+        });
       }
 
       function updateGames(data) {
