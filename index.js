@@ -415,7 +415,7 @@ function getGames(request, response) {
 	// First get the person's id
   console.log('1');
 	// use a helper function to query the DB, and provide a callback for when it's done
-	getGamesFromDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, function(error, result) {
+	getGamesFromDb(function(error, result) {
 		// This is the callback function that will be called when the DB is done.
 		// The job here is just to send it back.
 
@@ -426,11 +426,11 @@ function getGames(request, response) {
 			//var person = result[0];
 			response.status(200).json(result);
     }
-    console.log("games have been retreived");
+    console.log("games have been retrieved");
 	});
 }
 
-function getGamesFromDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, callback) {
+function getGamesFromDb(callback) {
 	//console.log("creating person on DB with id: " + id);
 
 	const client = new Client({
@@ -449,7 +449,7 @@ function getGamesFromDb(title, rating, msrb, stock, buyPrice, sellPrice, picture
     // var params = [id];
     
     var sql = "SELECT name, rating, msrb, stock, buy_price, sell_price, picture, description FROM games WHERE stock > 0";
-		var params = [title, rating, msrb, stock, buyPrice, sellPrice, picture, description];
+		var params = [];
 
 		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB, disconnect the client
