@@ -407,8 +407,7 @@ function createGameOnDb(title, rating, msrb, stock, buyPrice, sellPrice, picture
 } // end of CreatePersonFromDb
 
 app.get('/getGames', function(request, response) {
-  createGame(request, response);
-  response.render('pages/it_worked');
+  getGamesGame(request, response);
 });
 
 function getGames(request, response) {
