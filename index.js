@@ -412,7 +412,7 @@ app.get('/getGames', function(request, response) {
 
 function getGames(request, response) {
 	// First get the person's id
-
+  console.log('1');
 	// use a helper function to query the DB, and provide a callback for when it's done
 	getGamesFromDb(title, rating, msrb, stock, buyPrice, sellPrice, picture, description, function(error, result) {
 		// This is the callback function that will be called when the DB is done.
