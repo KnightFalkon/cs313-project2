@@ -420,7 +420,7 @@ function getGames(request, response) {
 		// The job here is just to send it back.
 
 		// Make sure we got a rows with games, then prepare JSON to send back
-		if (error || result == null || result.length != 1) {
+		if (error || result == null) {
 			response.status(500).json({success: false, data: error});
 		} else {
 			//var person = result[0];
