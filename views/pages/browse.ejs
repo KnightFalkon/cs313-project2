@@ -30,7 +30,13 @@
         for (var i = 0; i < data.length; i++) {
           var title = data[i].name;
           console.log(title);
-          resultList.append("<li><p>" + title + "</p></li>");
+          resultList.append('<div class="col-xs-12 text-center">');
+          resultList.append('<div class="row pad">');
+          resultList.append('<img src="' + data[i].picture +  '" alt="' + data[i].name + '" height="270" width="480" class="img-responsive center-block">');
+          resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart('" + data[i].name + "')" + '">Buy</button>');
+          resultList.append('</div>');
+          
+          
         }
       }
       }
