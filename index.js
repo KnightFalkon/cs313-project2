@@ -20,10 +20,10 @@ app.use(session ({
 
 app.get('/signin', (req, res) => res.render('pages/signin'));
 
-app.post('/login', function(req,res) {
+app.post('/login', function(req, res) {
   verifyUser(req, res);
 
-  if(req.session.username == req.query.username) {
+  if(req.session.username == req.body.username) {
     res.render('/browse');
   }
   else {
@@ -82,10 +82,10 @@ function verifyUserOnDb(username, password, callback) {
 			}
 
       if(bcrypt.compareSync(password, result.rows[0])) {
-        callback(null, true);
+        callback(null, result.rows);
       }
       else {
-        callback(true, null);
+        callback(err, null);
       }
 			console.log("Found result: " + JSON.stringify(result.rows));
 
