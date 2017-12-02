@@ -156,11 +156,11 @@ app.get('/addToCart', function(req, res) {
       index = i;
       break;
     }
-  }
+  } 
   if(index == -1) {
     console.log("inside index == -1");
     req.session.games.push({'name' : req.query.name, 'amount' : 1}); 
-    console.log(req.session.games[0].name); 
+    console.log("The name is " + JSON.stringify(req.session.games[0].name)); 
     res.status(200).send({message: 'Game added'});    
   }
   else {
