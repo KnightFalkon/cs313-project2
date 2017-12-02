@@ -23,7 +23,7 @@
 
       function updateGames(data) {
         if (data && data.length > 0) {
-          var resultList = $("#games");
+          var resultList = $("#games plus");
           resultList.empty();
 
           for (var i = 0; i < data.length; i++) {
@@ -77,7 +77,7 @@
       <hr class="thick">
 
     </header>
-    <div id="games" class="col-xs-12 text-center"></div>
+    <div id="games plus" class="col-xs-12 text-center"></div>
 
     <!--?php
       $statement = $db->prepare("SELECT name, picture FROM games");
