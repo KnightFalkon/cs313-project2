@@ -1,7 +1,7 @@
 var express = require('express');
+var app = express();
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var app = express();
 
 var { Client } = require("pg"); // This is the postgres database connection module.
 
