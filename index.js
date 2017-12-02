@@ -159,9 +159,9 @@ app.get('/addToCart', function(req, res) {
   }
 
   //////////////////////////testing
-  for(var i = 0; i < req.session.games.length; ++i) {
-    console.log(req.session.games[i].name);
-  }
+  // for(var i = 0; i < req.session.games.length; ++i) {
+  //   console.log(req.session.games[i].name);
+  // }
 
 });
 
