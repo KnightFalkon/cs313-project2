@@ -23,7 +23,7 @@ app.get('/signin', (req, res) => res.render('pages/signin'));
 app.post('/login', function(req, res) {
   verifyUser(req, res);
 
-  if(req.session.username == req.body.username) {
+  if(req.session.username == res.body.username) {
     res.render('/browse');
   }
   else {
