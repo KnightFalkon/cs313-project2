@@ -50,10 +50,10 @@
           } else {
             console.log(status);
           }
+          var label = $('#' + id + 'l');
+          label.text() = 'This item has been added to the cart ' + data.amount + ' time(s)';
         });
-        console.log("before adding to the label");
-        var label = $('#' + id + 'l');
-        label.append('This item has been added to the cart\n')
+
       }
     </script>
 

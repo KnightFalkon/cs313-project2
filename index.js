@@ -151,12 +151,11 @@ app.get('/addToCart', function(req, res) {
   } 
   if(index == -1) {
     req.session.games.push({'id' : req.query.id, 'amount' : 1}); 
-    res.status(200).send({message: 'Game added'});    
+    res.status(200).send({'amount' : req.session.games[index].amount});   
   }
   else {
     req.session.games[index].amount += 1;
-    res.status(200).send({message: 'Game added'});    
-    
+    res.status(200).send({'amount' : req.session.games[index].amount});   
   }
 
 });
