@@ -163,7 +163,7 @@ app.get('/addToCart', function(req, res) {
     res.status(200).send({message: 'Game added'});    
   }
   else {
-    cnosole.log("last one");
+    console.log("last one");
     req.session.games[i].amount += 1;
     res.status(200).send({message: 'Game added'});    
     
