@@ -140,6 +140,7 @@ app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
 app.get('/addToCart', function(req, res) {
 
+  console.log("beginning of addToCart");
   var index = -1;     
   if(req.session.games) {}
   else {
