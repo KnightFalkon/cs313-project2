@@ -143,7 +143,7 @@ app.get('/addToCart', function(req, res) {
 
   var index = -1;
 
-  req.session.games.push({'name' : "asdf", 'amount' : 1});      
+  req.session.games || [];     
 
   for(var i = 0; i < req.session.games.length; ++i) {
     if(req.query.name == req.session.games[i].name) {
