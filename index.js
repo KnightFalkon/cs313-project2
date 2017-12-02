@@ -158,6 +158,11 @@ app.get('/addToCart', function(req, res) {
     req.session.games[i].amount += 1;
   }
 
+  //////////////////////////testing
+  for(var i = 0; i < req.session.games.length; ++i) {
+    console.log(req.session.games[i].name);
+  }
+
 });
 
 
