@@ -96,7 +96,7 @@ function verifyUserOnDb(username, password, callback) {
 
 app.get('/signup', (req,res) => res.render('pages/signup'))
 
-app.post('logup', function(req, res) {
+app.post('/logup', function(req, res) {
   createPerson(req, res);
 })
 
