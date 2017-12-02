@@ -159,23 +159,15 @@ app.get('/addToCart', function(req, res) {
   }
   if(index == -1) {
     console.log("inside index == -1");
-    req.session.games.push({'name' : req.query.name, 'amount' : 1});  
+    req.session.games.push({'name' : req.query.name, 'amount' : 1}); 
+    console.log(req.session.games[0].name); 
     res.status(200).send({message: 'Game added'});    
   }
   else {
     console.log("last one");
     req.session.games[i].amount += 1;
-      ////////////////////////testing
-  for(var i = 0; i < req.session.games.length; ++i) {
-    console.log(req.session.games[i].name);
-  }
     res.status(200).send({message: 'Game added'});    
     
-  }
-
-  ////////////////////////testing
-  for(var i = 0; i < req.session.games.length; ++i) {
-    console.log(req.session.games[i].name);
   }
 
 });
