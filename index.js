@@ -82,7 +82,7 @@ function verifyUserOnDb(username, password, callback) {
 			}
       console.log("Found result: " + JSON.stringify(result.rows));
 
-      if(bcrypt.compareSync(password, result.rows[0])) {
+      if(bcrypt.compareSync(password, result.rows.password)) {
         callback(null, result.rows);
       }
       else {
