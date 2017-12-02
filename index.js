@@ -138,12 +138,13 @@ app.get('/checkout', (req,res) => res.render('pages/checkout'))
 app.get('/updateInfo', (req,res) => res.render('pages/updateInfo'))
 app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
-req.session.games = [];
-
 app.get('/addToCart', function(req, res) {
 
   var index = -1;     
-
+  if(req.session.games) {}
+  else {
+    req.session.games = [];
+  }
   for(var i = 0; i < req.session.games.length; ++i) {
     if(req.query.name == req.session.games[i].name) {
       index = i;
