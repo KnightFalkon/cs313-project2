@@ -112,6 +112,7 @@ app.use(function verifyLogin(req, res, next) {
 app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
+// this is for testing
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
