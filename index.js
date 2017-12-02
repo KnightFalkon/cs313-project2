@@ -47,7 +47,7 @@ function verifyUser(request, response) {
 		if (error || result == null) {
 			console.log("you know hte place");//response.status(500).json({success: false, data: error});
 		} else {
-      req.session.username = username;
+      req.session.username = username; //sets user
       res.render('pages/browse')
 		}
 	});
