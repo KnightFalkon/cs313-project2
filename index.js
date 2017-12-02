@@ -81,7 +81,7 @@ function verifyUserOnDb(username, password, callback) {
 				callback(err, null);
 			}
       console.log("Found result: " + JSON.stringify(result.rows));
-      
+
       if(bcrypt.compareSync(password, result.rows[0])) {
         callback(null, result.rows);
       }
@@ -162,7 +162,7 @@ function createPerson(request, response) {
 			response.status(500).json({success: false, data: error});
 		} else {
       request.session.username = username;
-      res.render('pages/browse');
+      response.render('pages/browse');
     }
     console.log("user created");
 	});
