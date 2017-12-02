@@ -45,9 +45,10 @@ function verifyUser(request, response) {
 
 		// Make sure we got a row with the person, then prepare JSON to send back
 		if (error || result == null) {
-			response.status(500).json({success: false, data: error});
+			console.log("you know hte place");//response.status(500).json({success: false, data: error});
 		} else {
-			req.session.username = username;
+      req.session.username = username;
+      res.render('pages/browse')
 		}
 	});
 }
