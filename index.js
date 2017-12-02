@@ -140,34 +140,24 @@ app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
 app.get('/addToCart', function(req, res) {
 
-  console.log("beginning of addToCart");
-  console.log("here is the name: " + req.query.name);
   var index = -1;     
   if(req.session.games) {
-    console.log("games exists");
   }
   else {
-    console.log("did not exist, creating games");
     req.session.games = [];
   }
   for(var i = 0; i < req.session.games.length; ++i) {
-    console.log("insdie for loop");
     if(req.query.name == req.session.games[i].name) {
-      console.log("inside if inside for loop");
       index = i;
       break;
     }
   } 
   if(index == -1) {
-    console.log("inside index == -1");
     req.session.games.push({'name' : req.query.name, 'amount' : 1}); 
-    console.log("The name is " + req.session.games[0].name); 
     res.status(200).send({message: 'Game added'});    
   }
   else {
-    console.log("last one");
     req.session.games[index].amount += 1;
-    console.log("amount is " + req.session.games[index].amount);
     res.status(200).send({message: 'Game added'});    
     
   }
