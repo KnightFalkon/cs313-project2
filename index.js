@@ -160,8 +160,8 @@ function createPerson(request, response) {
 		if (error || result == null) {
 			response.status(500).json({success: false, data: error});
 		} else {
-      req.session.username = username;
-      res.render('/browse');
+      request.session.username = username;
+      response.render('/browse');
     }
     console.log("user created");
 	});
