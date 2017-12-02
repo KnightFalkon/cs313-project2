@@ -113,12 +113,11 @@ app.post('/logup', function(req, res) {
 app.use(express.static(__dirname + '/public'));
 
 app.use(function verifyLogin(req, res, next) {
-  if(req.session.username != null) {
+  if(req.session.username) {
     next();
   }
   else {
-    res.render('pages/signin');
-    next();
+    res.status(401).send({message: 'You must be logged in.'});
   }
 });
 
