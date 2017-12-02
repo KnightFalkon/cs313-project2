@@ -138,10 +138,11 @@ app.get('/confirm', (req,res) => res.render('pages/confirm'))
 app.get('/addToCart', function(req, res) {
 
   var index = -1;     
-  if(req.session.games) {
-  }
+  var needed = false;
+  if(req.session.games) {}
   else {
     req.session.games = [];
+    needed = true;
   }
   for(var i = 0; i < req.session.games.length; ++i) {
     if(req.query.id == req.session.games[i].id) {
@@ -150,8 +151,13 @@ app.get('/addToCart', function(req, res) {
     }
   } 
   if(index == -1) {
-    req.session.games.push({'id' : req.query.id, 'amount' : 1}); 
-    res.status(200).send({'amount' : req.session.games[0].amount});   
+    req.session.games.push({'id' : req.query.id, 'amount' : 1});
+    if(needed) {
+      res.status(200).send({'amount' : req.session.games[0].amount});       
+    }
+    else if(!needed) {
+      res.status(200).send({'amount' : req.session.games[req.session.games.length-1].amount});    
+    }
   }
   else {
     req.session.games[index].amount += 1;
