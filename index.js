@@ -138,7 +138,7 @@ app.get('/createPerson', function(request, response) {
 function createPerson(request, response) {
 	// First get the person's id
   var username = request.query.username;
-  var password = request.query.password;
+  var nonHash = request.query.password;
   var name = request.query.name;
   var street = request.query.street;
   var city = request.query.city;
@@ -146,7 +146,9 @@ function createPerson(request, response) {
   var zip = request.query.zip;
   var cardNum = request.query.cardNum;
 
-  password = bcrypt.hashSync(password, 10);
+  console.log("password is: " + nonHash);
+
+  password = bcrypt.hashSync(nonHash, 10);
 
 	// use a helper function to query the DB, and provide a callback for when it's done
 	createPersonOnDb(username, password, name, street, city, state, zip, cardNum, function(error, result) {
