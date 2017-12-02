@@ -28,7 +28,7 @@ app.post('/login', function(req, res) {
     console.log("session username " + req.session.username);
     console.log("body username " + req.body.username);
     if(req.session.username == req.body.username) {
-      res.render('/browse');
+      res.render('pages/browse');
     }
     else {
       console.log("testing");
