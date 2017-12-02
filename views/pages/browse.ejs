@@ -43,7 +43,7 @@
 
       function addToCart(name) {
         $.get('/addToCart',
-          name,
+          {'name' : name},
           function callback(data, status) {
           //when the thing comes back, update the DOM. 
           if (status != 'success') {
