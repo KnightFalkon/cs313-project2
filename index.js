@@ -165,6 +165,10 @@ app.get('/addToCart', function(req, res) {
   else {
     console.log("last one");
     req.session.games[i].amount += 1;
+      ////////////////////////testing
+  for(var i = 0; i < req.session.games.length; ++i) {
+    console.log(req.session.games[i].name);
+  }
     res.status(200).send({message: 'Game added'});    
     
   }
