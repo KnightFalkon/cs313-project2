@@ -130,7 +130,7 @@ app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
 
 
-app.get('/createPerson', function(request, response) {
+app.post('/createPerson', function(request, response) {
   createPerson(request, response);
   response.render('pages/it_worked');
 });
