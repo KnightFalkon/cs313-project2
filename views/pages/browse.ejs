@@ -23,17 +23,16 @@
 
       function updateGames(data) {
         if (data && data.length > 0) {
-          var resultList = $("#games plus");
+          var resultList = $("#games");
           resultList.empty();
 
           for (var i = 0; i < data.length; i++) {
             var title = data[i].name;
-            console.log(title);
             resultList.append('<div class="row pad">');
-            resultList.append('<label for="' + data[i].name + '">' + data[i].name + '</label>');            
+            resultList.append('<label for="' + data[i].id + '">' + data[i].name + '</label>');            
             resultList.append('<img src="' + data[i].picture +  '" alt="' + data[i].name + '" height="270" width="480" class="img-responsive center-block">');
             resultList.append('<label id="' + data[i].name + 'l' + '" ></label>');                        
-            resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart('" + data[i].name + "')" + '">Buy</button>');
+            resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart('" + data[i].id + "')" + '">Buy</button>');
             resultList.append('</div>');
             
             
@@ -41,9 +40,9 @@
         }
       }
 
-      function addToCart(name) {
+      function addToCart(id) {
         $.get('/addToCart',
-          {'name' : name},
+          {'id' : id},
           function callback(data, status) {
           //when the thing comes back, update the DOM. 
           if (status != 'success') {
@@ -53,7 +52,7 @@
           }
         });
         console.log("before adding to the label");
-        var label = $('#' + name + 'l');
+        var label = $('#' + id + 'l');
         label.append('This item has been added to the cart\n')
       }
     </script>
@@ -77,7 +76,7 @@
       <hr class="thick">
 
     </header>
-    <div id="games plus" class="col-xs-12 text-center"></div>
+    <div id="games" class="col-xs-12 text-center"></div>
 
     <!--?php
       $statement = $db->prepare("SELECT name, picture FROM games");

@@ -144,13 +144,13 @@ app.get('/addToCart', function(req, res) {
     req.session.games = [];
   }
   for(var i = 0; i < req.session.games.length; ++i) {
-    if(req.query.name == req.session.games[i].name) {
+    if(req.query.id == req.session.games[i].id) {
       index = i;
       break;
     }
   } 
   if(index == -1) {
-    req.session.games.push({'name' : req.query.name, 'amount' : 1}); 
+    req.session.games.push({'id' : req.query.id, 'amount' : 1}); 
     res.status(200).send({message: 'Game added'});    
   }
   else {
@@ -569,11 +569,8 @@ function getGamesFromDb(callback) {
 			console.log(err);
 			callback(err, null);
 		}
-
-		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
-    // var params = [id];
     
-    var sql = "SELECT name, rating, msrb, stock, buy_price, sell_price, picture, description FROM games WHERE stock > 0";
+    var sql = "SELECT id, name, rating, msrb, stock, buy_price, sell_price, picture, description FROM games WHERE stock > 0";
 		var params = [];
 
 		var query = client.query(sql, params, function(err, result) {
