@@ -117,8 +117,8 @@ app.use(function verifyLogin(req, res, next) {
     next();
   }
   else {
-    res.render('/pages.signin');
-    res.status(401).send({message: 'You are not signed in.'});
+    res.render('pages/signin');
+    next();
   }
 });
 
