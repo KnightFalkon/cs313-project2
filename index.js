@@ -142,20 +142,27 @@ app.get('/addToCart', function(req, res) {
 
   console.log("beginning of addToCart");
   var index = -1;     
-  if(req.session.games) {}
+  if(req.session.games) {
+    console.log("games exists");
+  }
   else {
+    console.log("did not exist, creating games");
     req.session.games = [];
   }
   for(var i = 0; i < req.session.games.length; ++i) {
+    console.log("insdie for loop");
     if(req.query.name == req.session.games[i].name) {
+      console.log("inside if inside for loop");
       index = i;
       break;
     }
   }
   if(index == -1) {
+    console.log("inside index == -1");
     req.session.games.push({'name' : req.query.name, 'amount' : 1});    
   }
   else {
+    cnosole.log("last one");
     req.session.games[i].amount += 1;
   }
 
