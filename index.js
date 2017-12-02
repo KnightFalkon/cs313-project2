@@ -22,8 +22,8 @@ app.get('/signin', (req, res) => res.render('pages/signin'));
 
 app.post('/login', function(req, res) {
   verifyUser(req, res, function(error, result) {
-    if(err)
-      throw err;
+    if(error)
+      throw error;
     
     console.log("session username " + req.session.username);
     console.log("body username " + req.body.username);
