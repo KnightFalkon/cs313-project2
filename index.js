@@ -21,20 +21,23 @@ app.use(session ({
 app.get('/signin', (req, res) => res.render('pages/signin'));
 
 app.post('/login', function(req, res) {
-  verifyUser(req, res);
-
-  console.log("session username " + req.session.username);
-  console.log("body username " + req.body.username);
-  if(req.session.username == req.body.username) {
-    res.render('/browse');
-  }
-  else {
-    console.log("testing");
-    res.status(401).send({message: 'Username or Password is incorrect'});
-  }
+  verifyUser(req, res, function(error, result) {
+    if(err)
+      throw err;
+    
+    console.log("session username " + req.session.username);
+    console.log("body username " + req.body.username);
+    if(req.session.username == req.body.username) {
+      res.render('/browse');
+    }
+    else {
+      console.log("testing");
+      res.status(401).send({message: 'Username or Password is incorrect'});
+    }
+  });
 });
 
-function verifyUser(request, response) {
+function verifyUser(request, response, callback) {
 	// First get the person's id
   var username = request.body.username;
   var password = request.body.password;
@@ -48,10 +51,12 @@ function verifyUser(request, response) {
 
 		// Make sure we got a row with the person, then prepare JSON to send back
 		if (error || result == null) {
-			console.log("you know hte place");//response.status(500).json({success: false, data: error});
-		} else {
+      console.log("you know hte place");//response.status(500).json({success: false, data: error});
+      callback(error, null);
+    } else {
       console.log("setting session username");
       request.session.username = username; //sets user
+      callback(null, "success");
       //response.render('pages/browse')
 		}
 	});
