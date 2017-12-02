@@ -84,9 +84,11 @@ function verifyUserOnDb(username, password, callback) {
       console.log("Found result: " + JSON.stringify(result.rows[0].password));
 
       if(bcrypt.compareSync(password, JSON.stringify(result.rows[0].password))) {
+        console.log("passwords were equal");
         callback(null, result.rows);
       }
       else {
+        console.log("passwords were not equal");
         callback(err, null);
       }
 			
