@@ -1,15 +1,6 @@
-// const express = require('express')
-// const path = require('path')
-// const PORT = process.env.PORT || 5000
-
-// express()
-//   .use(express.static(path.join(__dirname, 'public')))
-//   .set('views', path.join(__dirname, 'views'))
-//   .set('view engine', 'ejs')
-//   .get('/', (req, res) => res.render('pages/index'))
-//   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
 var express = require('express');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 var app = express();
 
 var { Client } = require("pg"); // This is the postgres database connection module.
@@ -18,6 +9,105 @@ var { Client } = require("pg"); // This is the postgres database connection modu
 const bcrypt = require('bcrypt');
 
 app.set('port', (process.env.PORT || 5000));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(session ({
+  secret: 'RagerGamer',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.get('/signin', (req, res) => res.render('pages.signin'));
+
+app.post('/login', function(req,res) {
+  verifyUser(req, res);
+
+  if(req.session.username == req.query.username) {
+    res.render('/browse');
+  }
+  else {
+    res.status(401).send({message: 'Username or Password is incorrect'});
+  }
+});
+
+function verifyUser(request, response) {
+	// First get the person's id
+  var username = request.body.username;
+  var password = request.body.password;
+
+	// TODO: It would be nice to check here for a valid id before continuing on...
+
+	// use a helper function to query the DB, and provide a callback for when it's done
+	verifyUserOnDb(username, password, function(error, result) {
+		// This is the callback function that will be called when the DB is done.
+		// The job here is just to send it back.
+
+		// Make sure we got a row with the person, then prepare JSON to send back
+		if (error || result == null) {
+			response.status(500).json({success: false, data: error});
+		} else {
+			req.session.username = username;
+		}
+	});
+}
+
+function verifyUserOnDb(username, password, callback) {
+
+	const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
+
+	client.connect(function(err) {
+		if (err) {
+			console.log("Error connecting to DB: ")
+			console.log(err);
+			callback(err, null);
+		}
+
+		var sql = "SELECT password FROM users WHERE username = $1";
+		var params = [username];
+
+		var query = client.query(sql, params, function(err, result) {
+			// we are now done getting the data from the DB, disconnect the client
+			client.end(function(err) {
+				if (err) throw err;
+			});
+
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+
+      if(bcrypt.compareSync(password, result.rows[0])) {
+        callback(null, true);
+      }
+      else {
+        callback(true, null);
+      }
+			console.log("Found result: " + JSON.stringify(result.rows));
+
+		});
+	});
+
+} // end of getPersonFromDb
+
+app.get('/signup', (req,res) => res.render('pages/signup'))
+
+app.post('logup', function(req, res) {
+  createPerson(req, res);
+})
+
+app.use(function verifyLogin(req, res, next) {
+  if(req.session.username != null) {
+    next();
+  }
+  else {
+    res.status(401).send({message: 'You are not signed in.'});
+  }
+});
 
 app.use(express.static(__dirname + '/public'));
 
@@ -31,8 +121,6 @@ app.get('/cart', (req,res) => res.render('pages/cart'))
 app.get('/checkout', (req,res) => res.render('pages/checkout'))
 app.get('/account', (req,res) => res.render('pages/account'))
 app.get('/checkout', (req,res) => res.render('pages/checkout'))
-app.get('/signin', (req,res) => res.render('pages/signin'))
-app.get('/signup', (req,res) => res.render('pages/signup'))
 app.get('/updateInfo', (req,res) => res.render('pages/updateInfo'))
 app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
