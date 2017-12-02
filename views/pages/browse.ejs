@@ -15,7 +15,6 @@
           //when the thing comes back, update the DOM. 
           if (status != 'success') {
             console.log(status);
-            console.log("it didn't work you idiot");
           } else {
             updateGames(data);
           }
@@ -24,22 +23,25 @@
 
       function updateGames(data) {
         if (data && data.length > 0) {
-        var resultList = $("#games");
-        resultList.empty();
+          var resultList = $("#games");
+          resultList.empty();
 
-        for (var i = 0; i < data.length; i++) {
-          var title = data[i].name;
-          console.log(title);
-          resultList.append('<div class="col-xs-12 text-center">');
-          resultList.append('<div class="row pad">');
-          resultList.append('<label for="' + data[i].name + '">' + data[i].name + '</label>');            
-          resultList.append('<img src="' + data[i].picture +  '" alt="' + data[i].name + '" height="270" width="480" class="img-responsive center-block">');
-          resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart('" + data[i].name + "')" + '">Buy</button>');
-          resultList.append('</div>');
-          
-          
+          for (var i = 0; i < data.length; i++) {
+            var title = data[i].name;
+            console.log(title);
+            resultList.append('<div class="row pad">');
+            resultList.append('<label for="' + data[i].name + '">' + data[i].name + '</label>');            
+            resultList.append('<img src="' + data[i].picture +  '" alt="' + data[i].name + '" height="270" width="480" class="img-responsive center-block">');
+            resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart('" + data[i].name + "')" + '">Buy</button>');
+            resultList.append('</div>');
+            
+            
+          }
         }
       }
+
+      function addToCart(name) {
+
       }
     </script>
 
@@ -62,7 +64,24 @@
       <hr class="thick">
 
     </header>
-    <div id="games"></div>
+    <div id="games" class="col-xs-12 text-center"></div>
+
+    <!--?php
+      $statement = $db->prepare("SELECT name, picture FROM games");
+      $statement->execute();
+      // Go through each result
+      while ($row = $statement->fetch(PDO::FETCH_ASSOC))
+      {
+        // The variable "row" now holds the complete record for that
+        // row, and we can access the different values based on their
+        // name
+        echo '<div class="col-xs-12 text-center">';
+        echo '<div class="row pad">';
+        echo '<img src="' . $row['picture'] . '" alt="' . $row['name'] . '" height="270" width="480" class="img-responsive center-block">';
+        echo '<button class="btn-lg btn-primary" onclick="' . "addToCart('" . $row['name'] . "')" . '">Buy</button>' . "\n";
+        echo '</div>';
+      }
+    ?-->
 
   </body>
 
