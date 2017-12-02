@@ -100,14 +100,14 @@ app.post('/logup', function(req, res) {
   createPerson(req, res);
 })
 
-app.use(function verifyLogin(req, res, next) {
-  if(req.session.username != null) {
-    next();
-  }
-  else {
-    res.status(401).send({message: 'You are not signed in.'});
-  }
-});
+// app.use(function verifyLogin(req, res, next) {
+//   if(req.session.username != null) {
+//     next();
+//   }
+//   else {
+//     res.status(401).send({message: 'You are not signed in.'});
+//   }
+// });
 
 app.use(express.static(__dirname + '/public'));
 
