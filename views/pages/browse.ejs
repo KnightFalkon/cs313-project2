@@ -32,6 +32,7 @@
             resultList.append('<div class="row pad">');
             resultList.append('<label for="' + data[i].name + '">' + data[i].name + '</label>');            
             resultList.append('<img src="' + data[i].picture +  '" alt="' + data[i].name + '" height="270" width="480" class="img-responsive center-block">');
+            resultList.append('<label id="' + data[i].name + 'l' + '" ></label>');                        
             resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart('" + data[i].name + "')" + '">Buy</button>');
             resultList.append('</div>');
             
@@ -41,7 +42,18 @@
       }
 
       function addToCart(name) {
-
+        $.get('/addToCart',
+          name,
+          function callback(data, status) {
+          //when the thing comes back, update the DOM. 
+          if (status != 'success') {
+            console.log(status);
+          } else {
+            console.log(status);
+          }
+        });
+        var label = $('#' + name + 'l');
+        label.append('This item has been added to the cart\n')
       }
     </script>
 

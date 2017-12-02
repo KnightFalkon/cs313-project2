@@ -113,16 +113,16 @@ app.post('/logup', function(req, res) {
   createPerson(req, res);
 })
 
-// app.use(function verifyLogin(req, res, next) {
-//   if(req.session.username != null) {
-//     next();
-//   }
-//   else {
-//     res.status(401).send({message: 'You are not signed in.'});
-//   }
-// });
-
 app.use(express.static(__dirname + '/public'));
+
+app.use(function verifyLogin(req, res, next) {
+  if(req.session.username != null) {
+    next();
+  }
+  else {
+    res.status(401).send({message: 'You are not signed in.'});
+  }
+});
 
 // views is directory for all template files
 // this is for testing
@@ -139,7 +139,24 @@ app.get('/updateInfo', (req,res) => res.render('pages/updateInfo'))
 app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
 
+app.get('/addToCart', function(req, res) {
 
+  var index = -1;
+
+  for(var i = 0; i < req.session.games.length; ++i) {
+    if(req.query.name == req.session.games[i].name) {
+      index = i;
+      break;
+    }
+  }
+  if(index == -1) {
+    req.session.games.push({'name' : req.query.name, 'amount' : 1});    
+  }
+  else {
+    req.session.games[i].amount += 1;
+  }
+
+});
 
 
 
