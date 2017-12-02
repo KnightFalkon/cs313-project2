@@ -18,7 +18,7 @@ app.use(session ({
   saveUninitialized: true
 }));
 
-app.get('/signin', (req, res) => res.render('pages.signin'));
+app.get('/signin', (req, res) => res.render('pages/signin'));
 
 app.post('/login', function(req,res) {
   verifyUser(req, res);
