@@ -117,6 +117,7 @@ app.use(function verifyLogin(req, res, next) {
     next();
   }
   else {
+    res.render('/pages.signin');
     res.status(401).send({message: 'You are not signed in.'});
   }
 });
@@ -152,6 +153,8 @@ app.get('/addToCart', function(req, res) {
   } 
   if(index == -1) {
     req.session.games.push({'id' : req.query.id, 'amount' : 1});
+    // these if stateents are used to make sure hte correct amount is passed
+    // back for display purposes
     if(needed) {
       res.status(200).send({'amount' : req.session.games[0].amount});       
     }
@@ -166,7 +169,10 @@ app.get('/addToCart', function(req, res) {
 
 });
 
-
+app.get('/logout', function(req, res) {
+  delete req.session.username;
+  res.render('pages/signin');
+})
 
 app.post('/createPerson', function(request, response) {
   createPerson(request, response);
