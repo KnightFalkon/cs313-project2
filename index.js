@@ -151,7 +151,7 @@ app.get('/addToCart', function(req, res) {
   } 
   if(index == -1) {
     req.session.games.push({'id' : req.query.id, 'amount' : 1}); 
-    res.status(200).send({'amount' : req.session.games[index].amount});   
+    res.status(200).send({'amount' : req.session.games[0].amount});   
   }
   else {
     req.session.games[index].amount += 1;
