@@ -161,7 +161,7 @@ function createPerson(request, response) {
 			response.status(500).json({success: false, data: error});
 		} else {
       request.session.username = username;
-      response.render('pages/browse');
+      app.get('/browse');
     }
     console.log("user created");
 	});
