@@ -141,6 +141,7 @@ app.get('/confirm', (req,res) => res.render('pages/confirm'))
 app.get('/addToCart', function(req, res) {
 
   console.log("beginning of addToCart");
+  console.log("here is the name: " + req.query.name);
   var index = -1;     
   if(req.session.games) {
     console.log("games exists");
