@@ -168,7 +168,7 @@ app.get('/addToCart', function(req, res) {
 
 });
 
-app.get('getCart', function(req, res) {
+app.get('/getCart', function(req, res) {
 
   getGamesFromDb(function(error, result) {
 		// This is the callback function that will be called when the DB is done.
