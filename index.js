@@ -179,7 +179,7 @@ app.get('/getCart', function(req, res) {
 			res.status(500).json({success: false, data: error});
 		} else {
 			//var person = result[0];
-			res.status(200).json(result, req.session.games);
+			res.status(200).json({games: result, session: req.session.games});
     }
     console.log("games have been retrieved");
 	});
