@@ -7,24 +7,44 @@
       
   
   <script>
-    // function deleteItem(item) {
-    //   $.ajax({
-    //     type: "POST",
-    //     url: 'deleteItem.php',
-    //     data: {
-    //       item : item
-    //     },
-    //     success: function(response) {
-    //       console.log(response);
-    //     }
-    //   });
-      
-    //   location.reload();
-    // }
+    function getCart() {
+      $.get('/getCart',
+          0,
+          function callback(games, session, status) {
+          //when the thing comes back, update the DOM. 
+          if (status != 'success') {
+            console.log(status);
+          } else {
+            loadCart(games, session);
+          }
+        });
+    }
+    function loadCart(games, session) {
+      var resultList = $("#cart");
+      if(!session) {
+        resultList.append("<h2>You have no items in your cart</h2>");
+        return;
+      }
+
+      var cart = [];
+
+      for(var i = 0; i < games.length; ++i) {
+        if(session.id = games.id) {
+          cart.push({id : games.id, name : games[i].name});
+        }
+      }
+      for(var i = 0; i < cart.length; ++i) {
+
+        resultList.append('<div class="row pad">');
+        resultList.append('<h4>' + cart[i].name + '</h4>');
+        resultList.append('<button onclick="deleteItem(' + cart[i].id + ')"> Delete</button>');
+        resultList.append('</div>');
+      }
+    }
   </script>
   </head>
 
-  <body>
+  <body onload="getCart()">
     <header>
       <h1 class="text-center title"> <span class="red">Rager</span>Gamer</h1></br>
 
@@ -42,11 +62,6 @@
 
     </header>
     <div id="cart" class="col xs-12 text-center">
-      <!-- if no items in cart -->
-      <h3>There are no items in your cart</h3>
-      <!-- if there are items in the cart -->
-      <h3>These are the item(s) that are currently in your cart.</h3>
-      <!-- load items in cart  -->
     </div>
   </body>
 
