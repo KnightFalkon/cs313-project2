@@ -176,10 +176,10 @@ app.get('/getCart', function(req, res) {
 
 		// Make sure we got a rows with games, then prepare JSON to send back
 		if (error || result == null) {
-			response.status(500).json({success: false, data: error});
+			res.status(500).json({success: false, data: error});
 		} else {
 			//var person = result[0];
-			response.status(200).json(result, req.session.games);
+			res.status(200).json(result, req.session.games);
     }
     console.log("games have been retrieved");
 	});
