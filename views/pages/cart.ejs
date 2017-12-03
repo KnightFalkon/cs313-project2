@@ -21,7 +21,7 @@
     }
     function loadCart(data) {
       var resultList = $("#cart");
-      if(data.session) {
+      if(!data.session) {
         resultList.append("<h2>You have no items in your cart</h2>");
         return;
       }
