@@ -19,8 +19,8 @@
           }
         });
 		}
-		var cart = [];
     function loadCart(data) {
+			cart = [];			
       var resultList = $("#cart");
       if(!data.session) {
         resultList.append("<h2>You have no items in your cart</h2>");
