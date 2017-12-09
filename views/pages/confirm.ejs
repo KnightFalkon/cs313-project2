@@ -2,10 +2,82 @@
 <html lang="en">
 
   <head>
-      <% include ../partials/header.ejs %>
+			<% include ../partials/header.ejs %>
+			
+			<script>
+				function confirm() {
+					transact();
+					display();
+				}
+
+				function transact() {
+
+				}
+
+				function display() {
+					getCart();
+					getPerson();
+				}
+
+				function getCart() {
+					$.get('/getCart',
+          0,
+          function callback(data, status) {
+          //when the thing comes back, update the DOM. 
+          if (status != 'success') {
+            console.log(status);
+          } else {
+							var cart = [];			
+							var resultList = $("#cart");
+							var noItems = true;
+							if(typeof data.session != 'undefined') {
+								if(data.session.length > 0){
+									noItems = false;					
+								}
+							}
+							if(noItems) {
+								resultList.append("<h2>You have no items in your cart</h2>");
+								return;				
+							}
+
+							for(var i = 0; i < data.session.length; ++i) {
+								console.log("games" + JSON.stringify(data.games) + "session" + JSON.stringify(data.session));
+								if(data.session[i].id == data.games[i].id) {
+									cart.push({id : data.games[i].id, name : data.games[i].name, amount : data.session[i].amount});
+								}
+							}
+							for(var i = 0; i < cart.length; ++i) {
+
+								resultList.append('<div class="row pad">');
+								resultList.append('<h4>' + cart[i].name + '</h4>');
+								resultList.append('<p> Amount: ' + cart[i].amount + '</p>');        
+								resultList.append('</div>');
+							}
+						}
+        });
+				}
+
+				function getPerson() {
+					$.get('/getPerson',
+						0,
+						function callback(data, status) {
+						//when the thing comes back, update the DOM. 
+						if (status != 'success') {
+							console.log(status);
+						} else {
+							var resultList = $("#person");
+
+							resultList.append("<p>" + data.name + "</p>");
+							resultList.append("<p>" + data.street + "</p>");
+							resultList.append("<p>" + data.city + "," + data.state + " " + data.zip + "</p>");
+														
+						}
+					});
+				}
+			</script>
   </head>
 
-  <body>
+  <body onload="confirm()">
     <header>
       <h1 class="text-center title"> <span class="red">Rager</span>Gamer</h1></br>
 
@@ -22,11 +94,16 @@
 
     </header>
 
-    <div class="text-center">
-    <!-- Display the items that were bought, and where they will be shipped to -->
+    <div id="cart" class="col-xs-12 text-center">
+			<h2>These games: </h2>
 
-      <a href="/browse">Back to Shopping</a>
-    </div>
+		</div>
+
+		<div id="person" class="col-xs-12 text-center">
+			<h2>Will be sent to: </h2>
+		</div>
+		
+		<a class="text-center" href="/browse">Back to Shopping</a>
 
   </body>
 

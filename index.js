@@ -25,14 +25,10 @@ app.post('/login', function(req, res) {
   verifyUser(req, res, function(error, result) {
     if(error)
       throw error;
-    
-    console.log("session username " + req.session.username);
-    console.log("body username " + req.body.username);
     if(req.session.username == req.body.username) {
       res.render('pages/browse');
     }
     else {
-      console.log("testing");
       res.status(401).send({message: 'Username or Password is incorrect'});
     }
   });
@@ -302,12 +298,12 @@ app.get('/getPerson', function(request, response) {
 
 function getPerson(request, response) {
 	// First get the person's id
-	var id = request.query.id;
+	var username = request.session.username;
 
 	// TODO: It would be nice to check here for a valid id before continuing on...
 
 	// use a helper function to query the DB, and provide a callback for when it's done
-	getPersonFromDb(id, function(error, result) {
+	getPersonFromDb(username, function(error, result) {
 		// This is the callback function that will be called when the DB is done.
 		// The job here is just to send it back.
 
@@ -321,8 +317,8 @@ function getPerson(request, response) {
 	});
 }
 
-function getPersonFromDb(id, callback) {
-	console.log("Getting person from DB with id: " + id);
+function getPersonFromDb(username, callback) {
+	console.log("Getting person from DB with username: " + username);
 
 	const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -336,8 +332,8 @@ function getPersonFromDb(id, callback) {
 			callback(err, null);
 		}
 
-		var sql = "SELECT id, username, name, card_num FROM users WHERE id = $1::int";
-		var params = [id];
+		var sql = "SELECT id, username, name, street, state, zip, card_num FROM users WHERE username = $1";
+		var params = [username];
 
 		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB, disconnect the client
