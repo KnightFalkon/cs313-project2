@@ -152,10 +152,10 @@ app.get('/addToCart', function(req, res) {
   } 
   if(index == -1) {
     req.session.games.push({id : req.query.id, name: req.query.name, amount : 1});
-    // these if stateents are used to make sure hte correct amount is passed
+    // these if stateents are used to make sure the correct amount is passed
     // back for display purposes
     if(needed) {
-      res.status(200).send({amount : req.session.games[0].amount});       
+      res.status(200).send({amount : req.session.games[0].amount});    
     }
     else if(!needed) {
       res.status(200).send({amount : req.session.games[req.session.games.length-1].amount});    

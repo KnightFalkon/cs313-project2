@@ -32,7 +32,7 @@
             resultList.append('<label for="' + data[i].id + '">' + data[i].name + '</label>');            
             resultList.append('<img src="' + data[i].picture +  '" alt="' + data[i].name + '" height="270" width="480" class="img-responsive center-block">');
             resultList.append('<label id="' + data[i].id + 'l' + '" ></label></br>');                        
-            resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart(" + data[i].id + "," + data[i].name + ')">Buy</button>');
+            resultList.append('<button class="btn-lg btn-primary" onclick="' + "addToCart(" + data[i].id + ')">Buy</button>');
             resultList.append('</div>');
             
             
@@ -40,10 +40,9 @@
         }
       }
 
-      function addToCart(id, name) {
+      function addToCart(id) {
         $.get('/addToCart',
-					{'id' : id,
-					 'name' : name},
+					{'id' : id},
           function callback(data, status) {
           //when the thing comes back, update the DOM. 
           if (status != 'success') {
