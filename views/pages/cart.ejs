@@ -18,15 +18,14 @@
             loadCart(data);
           }
         });
-    }
+		}
+		var cart = [];
     function loadCart(data) {
       var resultList = $("#cart");
       if(!data.session) {
         resultList.append("<h2>You have no items in your cart</h2>");
         return;
       }
-
-      var cart = [];
 
       for(var i = 0; i < data.session.length; ++i) {
         console.log("games" + JSON.stringify(data.games) + "session" + JSON.stringify(data.session));
@@ -42,7 +41,13 @@
         resultList.append('<button onclick="deleteItem(' + cart[i].id + ')"> Delete</button>');
         resultList.append('</div>');
       }
-    }
+		}
+		function deleteItem(id) {
+			cart = $.grep(cart, function(e) {
+				return e.id != id;
+				location.reload();
+			})
+		}
   </script>
   </head>
 

@@ -151,7 +151,7 @@ app.get('/addToCart', function(req, res) {
     }
   } 
   if(index == -1) {
-    req.session.games.push({id : req.query.id, amount : 1});
+    req.session.games.push({id : req.query.id, name: req.query.name, amount : 1});
     // these if stateents are used to make sure hte correct amount is passed
     // back for display purposes
     if(needed) {
