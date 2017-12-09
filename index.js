@@ -142,7 +142,16 @@ app.get('/deleteItem', function(req, res) {
 	// })
 	var newCart = [];
 	for(var i = 0; i < req.session.games.length; ++i) {
-		if(req.session.games[i].id != req.query.id) {
+		if(req.session.games[i].id == req.query.id) {
+			if(req.session.games[i].amount > 1) {
+				req.session.games[i].amount -= 1;
+				newCart.push(req.session.games[i]);
+			}
+			else {
+				//do not add to newCart
+			}
+		}
+		else if(req.session.games[i].id != req.query.id) {
 			newCart.push(req.session.games[i]);
 		}
 	}
