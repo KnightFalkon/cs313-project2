@@ -43,26 +43,16 @@
       }
 		}
 		function deleteItem(id) {
-			$.get('/getCart',
-          0,
+			$.get('/deleteItem',
+          {id : id},
           function callback(data, status) {
           //when the thing comes back, update the DOM. 
           if (status != 'success') {
             console.log(status);
           } else {
-            deleteThis(data, id);
+            location.reload(true);
           }
         });
-		}
-		function deleteThis(data, itemId) {
-			var cart = [];
-			console.log("Here is the cart!!" + JSON.stringify(cart));
-			
-			data = $.grep(cart, function(e) {
-				return e.id != itemId;
-			})
-			location.reload(true);	
-			console.log("Here is the cart!!" + JSON.stringify(cart));
 		}
   </script>
   </head>

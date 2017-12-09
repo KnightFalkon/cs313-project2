@@ -135,6 +135,13 @@ app.get('/checkout', (req,res) => res.render('pages/checkout'))
 app.get('/updateInfo', (req,res) => res.render('pages/updateInfo'))
 app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
+app.get('/deleteItem', function(req, res) {
+	req.session.games = $.grep(req.session.games, function(e) {
+		return e.id != itemId;
+	})
+	res.status(200).send({message: "success"});
+});
+
 app.get('/addToCart', function(req, res) {
 
   var index = -1;     
