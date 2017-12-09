@@ -21,11 +21,12 @@
 		}
     function loadCart(data) {
 			var cart = [];			
-      var resultList = $("#cart");
-      if(data.session.length > 0) {
-        //do nothing
+			var resultList = $("#cart");
+			var noItems = true;
+			if(data.session.length > 0) {
+				noItems = false;
 			}
-			else {
+			else if(noItems) {
         resultList.append("<h2>You have no items in your cart</h2>");
 				return;				
 			}
