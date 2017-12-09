@@ -24,7 +24,7 @@
 			var resultList = $("#cart");
 			var noItems = true;
 			console.log("\n\nHere is the session length\n\n" + data.session.length);
-			if(data.session.length > 0) {
+			if(typeof data.session.length != 'undefined') {
 				noItems = false;
 			}
 			if(noItems) {
