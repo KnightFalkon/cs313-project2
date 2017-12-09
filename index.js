@@ -332,7 +332,7 @@ function getPersonFromDb(username, callback) {
 			callback(err, null);
 		}
 
-		var sql = "SELECT id, username, name, street, state, zip, card_num FROM users WHERE username = $1";
+		var sql = "SELECT id, username, name, street, city, state, zip, card_num FROM users WHERE username = $1";
 		var params = [username];
 
 		var query = client.query(sql, params, function(err, result) {
