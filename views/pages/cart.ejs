@@ -22,10 +22,13 @@
     function loadCart(data) {
 			var cart = [];			
       var resultList = $("#cart");
-      if((!(data.session.length > 0)) && !data.session) {
+      if(data.session.length > 0) {
+        //do nothing
+			}
+			else {
         resultList.append("<h2>You have no items in your cart</h2>");
-        return;
-      }
+				return;				
+			}
 
       for(var i = 0; i < data.session.length; ++i) {
         console.log("games" + JSON.stringify(data.games) + "session" + JSON.stringify(data.session));
