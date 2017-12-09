@@ -67,7 +67,7 @@
 			cart = $.grep(cart, function(e) {
 				return e.id != itemId;
 			})
-			location.reload();			
+			location.reload(true);	
 			console.log("Here is the cart!!" + JSON.stringify(cart));
 		}
   </script>
