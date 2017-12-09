@@ -137,7 +137,7 @@ app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
 app.get('/deleteItem', function(req, res) {
 	req.session.games = $.grep(req.session.games, function(e) {
-		return e.id != itemId;
+		return e.id != req.query.id;
 	})
 	res.status(200).send({message: "success"});
 });
