@@ -24,7 +24,9 @@
 			var resultList = $("#cart");
 			var noItems = true;
 			if(typeof data.session != 'undefined') {
-				noItems = false;
+				if(data.session.length > 0){
+					noItems = false;					
+				}
 			}
 			if(noItems) {
         resultList.append("<h2>You have no items in your cart</h2>");
