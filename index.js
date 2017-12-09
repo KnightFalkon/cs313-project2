@@ -137,9 +137,16 @@ app.get('/updateInfo', (req,res) => res.render('pages/updateInfo'))
 app.get('/confirm', (req,res) => res.render('pages/confirm'))
 
 app.get('/deleteItem', function(req, res) {
-	req.session.games = $.grep(req.session.games, function(e) {
-		return e.id != req.query.id;
-	})
+	// req.session.games = $.grep(req.session.games, function(e) {
+	// 	return e.id != req.query.id;
+	// })
+	var newCart = [];
+	for(var i = 0; i < req.session.games.length; ++i) {
+		if(req.session.games[i].id != req.query.id) {
+			newCart.push(req.session.games[i]);
+		}
+	}
+	req.session.games = newCart;
 	res.status(200).send({message: "success"});
 });
 
