@@ -56,15 +56,9 @@
 		}
 		function deleteThis(data, itemId) {
 			var cart = [];
-			for(var i = 0; i < data.session.length; ++i) {
-        console.log("games" + JSON.stringify(data.games) + "session" + JSON.stringify(data.session));
-        if(data.session[i].id == data.games[i].id) {
-          cart.push({id : data.games[i].id, name : data.games[i].name, amount : data.session[i].amount});
-        }
-			}
 			console.log("Here is the cart!!" + JSON.stringify(cart));
 			
-			cart = $.grep(cart, function(e) {
+			data = $.grep(cart, function(e) {
 				return e.id != itemId;
 			})
 			location.reload(true);	
