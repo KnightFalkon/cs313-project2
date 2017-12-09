@@ -22,7 +22,7 @@
     function loadCart(data) {
 			var cart = [];			
       var resultList = $("#cart");
-      if(!data.session) {
+      if(!(data.session.length > 0)) {
         resultList.append("<h2>You have no items in your cart</h2>");
         return;
       }
