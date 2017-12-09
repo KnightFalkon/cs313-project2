@@ -212,7 +212,7 @@ app.get('/getCart', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
-  delete req.session;
+  req.session.destroy();
   res.render('pages/signin');
 })
 
