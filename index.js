@@ -147,6 +147,7 @@ app.get('/deleteItem', function(req, res) {
 		}
 	}
 	req.session.games = newCart;
+	console.log("here is the new session");
 	res.status(200).send({message: "success"});
 });
 
@@ -202,7 +203,7 @@ app.get('/getCart', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
-  delete req.session.username;
+  delete req.session;
   res.render('pages/signin');
 })
 
