@@ -62,11 +62,12 @@
           cart.push({id : data.games[i].id, name : data.games[i].name, amount : data.session[i].amount});
         }
 			}
+			console.log("Here is the cart!!" + JSON.stringify(cart));
 			
 			cart = $.grep(cart, function(e) {
 				return e.id != itemId;
-				location.reload();
 			})
+			location.reload();			
 			console.log("Here is the cart!!" + JSON.stringify(cart));
 		}
   </script>
