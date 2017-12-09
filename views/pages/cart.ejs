@@ -53,11 +53,6 @@
             deleteThis(data, id);
           }
         });
-			cart = $.grep(cart, function(e) {
-				return e.id != id;
-				location.reload();
-			})
-			console.log("\n\nHere is the cart!!!!" + JSON.stringify(cart));
 		}
 		function deleteThis(data, itemId) {
 			var cart = [];
@@ -69,9 +64,10 @@
 			}
 			
 			cart = $.grep(cart, function(e) {
-				return e.id != id;
+				return e.id != itemId;
 				location.reload();
 			})
+			console.log("Here is the cart!!" + JSON.stringify(cart));
 		}
   </script>
   </head>
