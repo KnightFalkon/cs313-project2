@@ -366,20 +366,20 @@ function getPersonFromDb(username, callback) {
 } // end of getPersonFromDb
 
 
-app.get('/updatePerson', function(request, response) {
+app.post('/updatePerson', function(request, response) {
   updatePerson(request, response);
 });
 
 function updatePerson(request, response) {
   // First get the person's id
   
-  var username = request.query.username;
-  var name = request.query.name;
-  var street = request.query.street;
-  var city = request.query.city;
-  var state = request.query.state;
-  var zip = request.query.zip;
-  var cardNum = request.query.cardNum;
+  var username = request.body.username;
+  var name = request.body.name;
+  var street = request.body.street;
+  var city = request.body.city;
+  var state = request.body.state;
+  var zip = request.body.zip;
+  var cardNum = request.body.cardNum;
 
 	// use a helper function to query the DB, and provide a callback for when it's done
 	updatePersonOnDb(username, name, street, city, state, zip, cardNum, function(error, result) {
