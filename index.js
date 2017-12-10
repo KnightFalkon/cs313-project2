@@ -212,7 +212,7 @@ app.get('/getCart', function(req, res) {
 });
 
 app.get('/clearCart', function(req, res) {
-	req.session.games.destroy();
+	req.session.games = [];
 	res.status(200).send({message : "Games cleared"});
 });
 
