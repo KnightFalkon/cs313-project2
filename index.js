@@ -831,7 +831,7 @@ function getUsersGamesFromDb(username, callback) {
 			callback(err, null);
 		}
     
-    var sql = 'SELECT g.name FROM transactions AS t INNER JOIN games AS g ON g.id = t.game_id WHERE t.username = $1';
+    var sql = 'SELECT g.name AS name FROM transactions AS t INNER JOIN games AS g ON g.id = t.game_id WHERE t.username = $1';
 		var params = [username];
 
 		var query = client.query(sql, params, function(err, result) {

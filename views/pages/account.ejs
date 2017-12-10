@@ -38,11 +38,22 @@
 						person.append('<label for="name">Card Number' + data.card_num + '</label>');
 						person.append('</div>');
 					}
-				})
+				});
 		}
 
 		function getGames() {
-			//do this
+			var games = $("#games");
+			$.get('/getPerson',
+				0,
+				function callback(data, status) {
+					if(status != "success") {
+						console.log(status);
+					} else {
+						for(var i = 0; i < data.length; i++) {
+							games.append('<p>' + data[i].name + '</p>');
+						}
+					}
+				});
 		}
 	</script>
 
@@ -77,6 +88,8 @@
 </br>
   <h4 class="text-center">Here are all of the games you've bought!</h4>
 
+	<div id="games" class="text-center">
   <!--use node to list games that have been sold and bought-->
+	</div>
 
   </body>
