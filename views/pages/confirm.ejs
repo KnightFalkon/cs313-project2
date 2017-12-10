@@ -6,8 +6,10 @@
 			
 			<script>
 				function confirm() {
+					async(transact, function() {
+						console.log("transaction is completed for real");
+					});
 					display();					
-					transact();
 				}
 
 				function transact() {
@@ -115,6 +117,13 @@
 							console.log(status);
 							}
 					});
+				}
+
+				function async(fn, callback) {
+					setTimeout(function() {
+						fn();
+						callback();
+					}, 0);
 				}
 			</script>
   </head>
