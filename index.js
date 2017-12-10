@@ -373,7 +373,7 @@ app.post('/updatePerson', function(request, response) {
 function updatePerson(request, response) {
   // First get the person's id
   
-  var username = request.body.username;
+  var username = request.session.username;
   var name = request.body.name;
   var street = request.body.street;
   var city = request.body.city;
