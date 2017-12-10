@@ -7,10 +7,9 @@
 			<script>
 				function confirm() {
 					async(transact, function() {
-						console.log("transaction is completed for real");
-						display();									
-						clearCart();
+						console.log("transaction is completed for real");									
 					});
+					display();
 				}
 
 				function transact() {
