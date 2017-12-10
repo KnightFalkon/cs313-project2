@@ -647,7 +647,7 @@ function getGamesFromDb(callback) {
 		});
 	});
 
-} // end of CreatePersonFromDb
+} // end of getGamesFromDb
 
 
 app.get('/boughtStock', function(request, response) {
@@ -792,6 +792,68 @@ function createTransactionOnDb(username, game_id, date, callback) {
 	});
 
 } // end of CreatePersonFromDb
+
+app.get('/getUsersGames', function(request, response) {
+  getUsersGames(request, response);
+});
+
+function getUsersGames(request, response) {
+	username = req.session.username;
+	// First get the person's id
+	// use a helper function to query the DB, and provide a callback for when it's done
+	getUsersGamesFromDb(username, function(error, result) {
+		// This is the callback function that will be called when the DB is done.
+		// The job here is just to send it back.
+
+		// Make sure we got a rows with games, then prepare JSON to send back
+		if (error || result == null) {
+			response.status(500).json({success: false, data: error});
+		} else {
+			//var person = result[0];
+			response.status(200).json(result[0]);
+    }
+    console.log("games have been retrieved");
+	});
+}
+
+function getUsersGamesFromDb(username, callback) {
+	//console.log("creating person on DB with id: " + id);
+
+	const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
+
+	client.connect(function(err) {
+		if (err) {
+			console.log("Error connecting to DB: ")
+			console.log(err);
+			callback(err, null);
+		}
+    
+    var sql = 'SELECT g.name FROM transactions AS t INNER JOIN games AS g ON g.id = t.game_id WHERE t.username = $1';
+		var params = [username];
+
+		var query = client.query(sql, params, function(err, result) {
+			// we are now done getting the data from the DB, disconnect the client
+			client.end(function(err) {
+				if (err) throw err;
+			});
+
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+
+			//console.log("Found result: " + JSON.stringify(result.rows));
+
+			// logs whether it was successful
+			callback(null, result.rows);
+		});
+	});
+
+} // end of getGamesFromDb
 
 
 app.listen(app.get('port'), function() {
