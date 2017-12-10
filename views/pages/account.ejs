@@ -4,9 +4,45 @@
   <head>
 
       <% include ../partials/header.ejs %>
-  </head>
+	</head>
+	
+	<script>
+		function loadPage() {
+			getPerson();
+			getGames();
+		}
+		function getPerson() {
+			var person = $("#person");
+			$.get('/getPerson',
+				0,
+				function callback(data, status) {
+					if(status != "success") {
+						console.log(status);
+					} else {
+						person.append('<div class="row pad">');
+						person.append('<label for="name">Name: ' + data.result.name + '</label>');
+						person.append('</div>');
+						person.append('<div class="row pad">');
+						person.append('<label for="name">Street: ' + data.result.street + '</label>');
+						person.append('</div>');
+						person.append('<div class="row pad">');
+						person.append('<label for="name">City: ' + data.result.city + '</label>');
+						person.append('</div>');
+						person.append('<div class="row pad">');
+						person.append('<label for="name">State: ' + data.result.state + '</label>');
+						person.append('</div>');
+						person.append('<div class="row pad">');
+						person.append('<label for="name">Zip' + data.result.zip + '</label>');
+						person.append('</div>');
+						person.append('<div class="row pad">');
+						person.append('<label for="name">Card Number' + data.result.card_num + '</label>');
+						person.append('</div>');
+					}
+				})
+		}
+	</script>
 
-  <body>
+  <body onload="loadPage()">
   
     <header>
       <h1 class="text-center title"> <span class="red">Rager</span>Gamer</h1></br>
@@ -29,25 +65,8 @@
 
   <h4 class="text-center">Account Details</h4>
 
-  <div class="col-xs-12 text-center">
-    <div class="row pad">
-      <label for="name"><!--?php echo "Name: " . $row['name'];?--></label>
-    </div>
-    <div class="row pad">
-      <label for="street"><!--?php echo "Street: " . $row['address'];?--></label>
-    </div>
-    <div class="row pad">
-      <label for="city"><!--?php echo "City: " . $row['city'];?--></label>
-    </div>
-    <div class="row pad">
-      <label for="state"><!--?php echo "State: " . $row['state'];?--></label>
-    </div>
-    <div class="row pad">
-      <label for="zip"><!--?php echo "Zip Code: " . $row['zip'];?--></label>
-    </div>
-    <div class="row pad">
-      <label for="cardNum"><!--?php echo "Visa Number: " . $row['card_num'];?--></label>
-    </div>
+  <div id="person" class="col-xs-12 text-center">
+
   </div>
 
   <h4 class="text-center">Here are all of the games you've bought!</h4>

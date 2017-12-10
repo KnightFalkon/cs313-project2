@@ -99,7 +99,7 @@ function verifyUserOnDb(username, password, callback) {
 		});
 	});
 
-} // end of getPersonFromDb
+} 
 
 app.get('/signup', (req,res) => res.render('pages/signup'))
 
