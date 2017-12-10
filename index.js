@@ -368,13 +368,12 @@ function getPersonFromDb(username, callback) {
 
 app.get('/updatePerson', function(request, response) {
   updatePerson(request, response);
-  response.render('pages/it_worked');  
 });
 
 function updatePerson(request, response) {
   // First get the person's id
   
-  var id = request.query.id;
+  var username = request.query.username;
   var name = request.query.name;
   var street = request.query.street;
   var city = request.query.city;
@@ -383,7 +382,7 @@ function updatePerson(request, response) {
   var cardNum = request.query.cardNum;
 
 	// use a helper function to query the DB, and provide a callback for when it's done
-	updatePersonOnDb(id, name, street, city, state, zip, cardNum, function(error, result) {
+	updatePersonOnDb(username, name, street, city, state, zip, cardNum, function(error, result) {
 		// This is the callback function that will be called when the DB is done.
 		// The job here is just to send it back.
 
@@ -393,12 +392,13 @@ function updatePerson(request, response) {
 		// } else {
 		// 	var person = result[0];
 		// 	response.status(200).json(result[0]);
-    // }
+		// }
+		res.render('pages/account');
     console.log("user created");
 	});
 }
 
-function updatePersonOnDb(id, name, street, city, state, zip, cardNum, callback) {
+function updatePersonOnDb(username, name, street, city, state, zip, cardNum, callback) {
 	//console.log("creating person on DB with id: " + id);
 
 	const client = new Client({
@@ -416,8 +416,8 @@ function updatePersonOnDb(id, name, street, city, state, zip, cardNum, callback)
 		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
     // var params = [id];
     
-    var sql = "UPDATE users SET name = $2, street = $3, city = $4, state = $5, zip = $6, card_num = $7 WHERE id = $1";
-		var params = [id, name, street, city, state, zip, cardNum];
+    var sql = "UPDATE users SET name = $2, street = $3, city = $4, state = $5, zip = $6, card_num = $7 WHERE username = $1";
+		var params = [username, name, street, city, state, zip, cardNum];
 
 		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB, disconnect the client
