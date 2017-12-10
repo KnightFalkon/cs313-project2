@@ -11,7 +11,32 @@
 				}
 
 				function transact() {
+					$.get('/getSession',
+						0,
+						function callback(data, status) {
+							if(status != 'success') {
+								console.log(status);
+							} else {
+									for(var i = 0; i < data.session.games.length; i++) {
+										for(var j = 0; i < data.session.games.amount; j++) {
+											$.get('/createTransaction',
+											{
+												username : data.session.username,
+												game_id : data.session.games[i].id
+											},
+											function callback(data, status) {
+											//when the thing comes back, update the DOM. 
+											if (status != 'success') {
+												console.log(status);
+											} else {
+												console.log(status);
+											}
+										});
+										}
+									}
 
+								}
+					});
 				}
 
 				function display() {
@@ -106,18 +131,20 @@
 
       <hr class="thick">
 
-    </header>
-
-    <div id="cart" class="col-xs-12 text-center">
-			<h2>These games: </h2>
-
-		</div>
-
-		<div id="person" class="col-xs-12 text-center">
-			<h2>Will be sent to: </h2>
-		</div>
+		</header>
 		
-		<a class="text-center" href="/browse">Back to Shopping</a>
+		<div class="col-xs-12 text-center">
+			<div id="cart" class="col-xs-12 text-center">
+				<h2>These games: </h2>
+
+			</div>
+
+			<div id="person" class="col-xs-12 text-center">
+				<h2>Will be sent to: </h2>
+			</div>
+		
+			<a class="text-center" href="/browse">Back to Shopping</a>
+		</div>
 
   </body>
 

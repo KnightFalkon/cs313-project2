@@ -156,6 +156,10 @@ app.get('/deleteItem', function(req, res) {
 	res.status(200).send({message: "success"});
 });
 
+app.get('/getSession', function(req, res) {
+	res.send(200).JSON({session : req.session});
+});
+
 app.get('/addToCart', function(req, res) {
 
   var index = -1;     
@@ -660,7 +664,7 @@ app.get('/soldStock', function(request, response) {
 
 function updateStock(request, response) {
   // First get the person's id
-  var game_id = request.query.game_id;
+  var game_id = request.query.id;
   var stock = request.query.stock;
 
 	// use a helper function to query the DB, and provide a callback for when it's done
@@ -723,12 +727,11 @@ function updateStockOnDb(game_id, stock, callback) {
 
 app.get('/createTransaction', function(request, response) {
   createTransaction(request, response);
-  response.render('pages/it_worked');
 });
 
 function createTransaction(request, response) {
 	// First get the person's id
-  var user_id = request.query.user_id;
+  var username = request.query.username;
   var game_id = request.query.game_id;
   var date = "current_date";
 
@@ -745,11 +748,11 @@ function createTransaction(request, response) {
 		// 	var person = result[0];
 		// 	response.status(200).json(result[0]);
     // }
-    console.log("user created");
+    console.log("transaction created");
 	});
 }
 
-function createTransactionOnDb(user_id, game_id, date, callback) {
+function createTransactionOnDb(username, game_id, date, callback) {
 	//console.log("creating person on DB with id: " + id);
 
 	const client = new Client({
@@ -767,8 +770,8 @@ function createTransactionOnDb(user_id, game_id, date, callback) {
 		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
     // var params = [id];
     
-    var sql = "INSERT INTO transactions (user_id, game_id, date) VALUES ($1, $2, $3)";
-		var params = [user_id, game_id, date];
+    var sql = "INSERT INTO transactions (user_id, game_id, date) VALUES ((SELECT id FROM users WHERE username = $1), $2, $3)";
+		var params = [username, game_id, date];
 
 		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB, disconnect the client
