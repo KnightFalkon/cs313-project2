@@ -157,7 +157,7 @@ app.get('/deleteItem', function(req, res) {
 });
 
 app.get('/getSession', function(req, res) {
-	res.send(200).JSON({session : req.session});
+	res.status(200).send({session : req.session});
 });
 
 app.get('/addToCart', function(req, res) {
@@ -213,7 +213,7 @@ app.get('/getCart', function(req, res) {
 
 app.get('/clearCart', function(req, res) {
 	req.session.games.destroy();
-	res.send(200).JSON({message : "Games cleared"});
+	res.status(200).send({message : "Games cleared"});
 });
 
 app.get('/logout', function(req, res) {
