@@ -732,7 +732,7 @@ function createTransaction(request, response) {
 	// First get the person's id
   var username = request.query.username;
   var game_id = request.query.game_id;
-  var date = "current_date";
+  var date = "current_timestamp";
 
 
 	// use a helper function to query the DB, and provide a callback for when it's done
