@@ -810,7 +810,7 @@ function getUsersGames(request, response) {
 			response.status(500).json({success: false, data: error});
 		} else {
 			//var person = result[0];
-			response.status(200).json(result[0]);
+			response.status(200).json(result);
     }
     console.log("games have been retrieved");
 	});
