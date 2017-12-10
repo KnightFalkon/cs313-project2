@@ -207,6 +207,11 @@ app.get('/getCart', function(req, res) {
 	});
 });
 
+app.get('/clearCart', function(req, res) {
+	req.session.games.destroy();
+	res.send(200).JSON({message : "Games cleared"});
+});
+
 app.get('/logout', function(req, res) {
   req.session.destroy();
   res.render('pages/signin');

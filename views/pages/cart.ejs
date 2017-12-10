@@ -39,12 +39,12 @@
           cart.push({id : data.games[i].id, name : data.games[i].name, amount : data.session[i].amount});
         }
       }
-      for(var i = 0; i < cart.length; ++i) {
+      for(var i = 0; i < data.session.length; ++i) {
 
         resultList.append('<div class="row pad">');
-        resultList.append('<h4>' + cart[i].name + '</h4>');
-        resultList.append('<p> Amount: ' + cart[i].amount + '</p>');        
-        resultList.append('<button onclick="deleteItem(' + cart[i].id + ')"> Delete</button>');
+        resultList.append('<h4>' + data.session[i].name + '</h4>');
+        resultList.append('<p> Amount: ' + data.session[i].amount + '</p>');        
+        resultList.append('<button onclick="deleteItem(' + data.session[i].id + ')"> Delete</button>');
         resultList.append('</div>');
       }
 		}
