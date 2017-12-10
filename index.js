@@ -794,8 +794,6 @@ function createTransactionOnDb(username, game_id, date, callback) {
 } // end of CreatePersonFromDb
 
 
-server = app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
-server.timeout = 200000000;
