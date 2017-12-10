@@ -769,7 +769,7 @@ function createTransactionOnDb(username, game_id, date, callback) {
 		// var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
     // var params = [id];
     
-    var sql = "INSERT INTO transactions (user_id, game_id, date) VALUES ((SELECT id FROM users WHERE username = $1), $2, $3)";
+    var sql = "INSERT INTO transactions (user_id, game_id, purchase_date) VALUES ((SELECT id FROM users WHERE username = $1), $2, $3)";
 		var params = [username, game_id, date];
 
 		var query = client.query(sql, params, function(err, result) {
