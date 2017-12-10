@@ -393,7 +393,7 @@ function updatePerson(request, response) {
 		// 	var person = result[0];
 		// 	response.status(200).json(result[0]);
 		// }
-		res.render('pages/account');
+		response.render('pages/account');
     console.log("user created");
 	});
 }
