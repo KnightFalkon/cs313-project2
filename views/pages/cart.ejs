@@ -34,7 +34,6 @@
 			}
 
       for(var i = 0; i < data.session.length; ++i) {
-        console.log("games" + JSON.stringify(data.games) + "session" + JSON.stringify(data.session));
         if(data.session[i].id == data.games[i].id) {
           cart.push({id : data.games[i].id, name : data.games[i].name, amount : data.session[i].amount});
         }
