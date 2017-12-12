@@ -742,12 +742,11 @@ function createTransaction(request, response) {
 		// The job here is just to send it back.
 
 		// Make sure we got a row with the person, then prepare JSON to send back
-		// if (error || result == null || result.length != 1) {
-		// 	response.status(500).json({success: false, data: error});
-		// } else {
-		// 	var person = result[0];
-		// 	response.status(200).json(result[0]);
-    // }
+		if (error || result == null) {
+			response.status(500).json({success: false, data: error});
+		} else {
+			response.status(200).json(result);
+    }
     console.log("transaction created");
 	});
 }
