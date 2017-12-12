@@ -6,12 +6,14 @@
 			
 			<script>
 				function confirm() {
-					// async(transact, function() {
-					// 	console.log("transaction is completed for real");									
-					// });
+					async(transact, function() {
+						console.log("transaction is completed for real");	
+						display();
+						clearCart();								
+					});
 					//transact();
-					display();
-					clearCart();
+					// display();
+					// clearCart();
 				}
 
 				function transact() {
