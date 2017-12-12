@@ -3,9 +3,53 @@
 
   <head>
 			<% include ../partials/header.ejs %>
+
+			<script>
+				function getPerson() {
+					var person = $("#person");
+					$.get('/getPerson',
+						0,
+						function callback(data, status) {
+							if(status != "success") {
+								console.log(status);
+							} else {
+								person.append('<h3>Update your information, so we can send you sweet games!</h3>');
+								person.append('<form  action="/updatePerson" method="post">');
+								person.append('<div class="row pad">');
+								person.append('<label for="name">name:</label>');
+								person.append('<input type="text" name="name" id="name" value="' + data.name +'" pattern="^[a-z*A-Z*\s]{1,50}$" title="You sure that is your name??">');
+								person.append('</div>');
+								person.append('<div class="row pad">');
+								person.append('<label for="street">street:</label>');
+								person.append('<input type="text" name="street" id="street" value="' + data.street + '" pattern="^[a-z*A-Z*0-9*\s]{1,100}$" title="You sure that is your street?">');
+								person.append('</div>');
+								person.append('<div class="row pad">');
+								person.append('<label for="city">city:</label>');
+								person.append('<input type="text" name="city" id="city" value="' + data.city + '" pattern="^[a-z*A-Z*\s]{1,100}$" title="You sure that is your city?">');
+								person.append('</div>')
+								person.append('<div class="row pad">');
+								person.append('<label for="state">State:</label>');
+								person.append('<input type="text" name="state" id="state" value ="' + data.state + '" pattern="^[A-Z*]{2}$" title="Make sure to use your states capitalized two letter code">');
+								person.append('</div>');
+								person.append('<div class="row pad">');
+								person.append('<label for="zip">Zip Code:</label>');
+								person.append('<input type="text" name="zip" id="zip" value="' + data.zip + '" pattern="^[0-9*]{5}$" title="You sure that is your Zip Code?">');
+								person.append('</div>');
+								person.append('<div class="row pad">');
+								person.append('<label for="cardNum">Credit Card number (visa only):</label>');
+								person.append('<input type="text" name="cardNum" id="cardNum" value="' + data.card_num + '" pattern="^[0-9*]{16}$" title="You sure that is your Card Number? Do not use dashes.">');
+								person.append('</div>');
+								person.append('<div class="row pad">');
+								person.append('<input type="submit">');
+								person.append('</div>');
+								person.append('</form>');
+							}
+				});
+				}
+			</script>
   </head>
 
-  <body>
+  <body onload="getPerson()">
 
     <header>
       <h1 class="text-center title"> <span class="red">Rager</span>Gamer</h1></br>
@@ -23,37 +67,8 @@
 
     </header>
     
-    <div class="col-xs-12 text-center">    
-      <h3>Update your information, so we can send you sweet games!</h3>
-      <form  action="/updatePerson" method="post">
-        <div class="row pad">
-          <label for="name">name:</label>
-          <input type="text" name="name" id="name" value="input with ejs" pattern="^[a-z*A-Z*\s]{1,50}$" title="You sure that is your name??">
-        </div>
-        <div class="row pad">
-          <label for="street">street:</label>
-          <input type="text" name="street" id="street" value="input with ejs" pattern="^[a-z*A-Z*0-9*\s]{1,100}$" title="You sure that is your street?">
-        </div>
-        <div class="row pad">
-          <label for="city">city:</label>
-          <input type="text" name="city" id="city" value="input with ejs" pattern="^[a-z*A-Z*\s]{1,100}$" title="You sure that is your city?">
-        </div>
-        <div class="row pad">
-          <label for="state">State:</label>
-          <input type="text" name="state" id="state" value ="input with ejs" pattern="^[A-Z*]{2}$" title="Make sure to use your states capitalized two letter code">
-        </div>
-        <div class="row pad">
-          <label for="zip">Zip Code:</label>
-          <input type="text" name="zip" id="zip" value="input with ejs" pattern="^[0-9*]{5}$" title="You sure that is your Zip Code?">
-        </div>
-        <div class="row pad">
-          <label for="cardNum">Credit Card number (visa only):</label>
-          <input type="text" name="cardNum" id="cardNum" value="input with ejs" pattern="^[0-9*]{16}$" title="You sure that is your Card Number? Do not use dashes.">
-        </div>
-        <div class="row pad">
-          <input type="submit">
-        </div>
-      </form>
+    <div id="person" class="col-xs-12 text-center">    
+      
     </div>
 
   </body>
