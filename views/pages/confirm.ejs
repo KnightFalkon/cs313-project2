@@ -6,9 +6,9 @@
 			
 			<script>
 				function confirm() {
-					async(transact, function() {
-						console.log("transaction is completed for real");									
-					});
+					// async(transact, function() {
+					// 	console.log("transaction is completed for real");									
+					// });
 					display();
 				}
 
@@ -25,20 +25,20 @@
 									for(var i = 0; i < data.session.games.length; i++) {
 										for(var j = 0; i < data.session.games[i].amount; j++) {
 											console.log("creating transaction");
-											$.get('/createTransaction',
-											{
-												username : data.session.username,
-												game_id : data.session.games[i].id
-											},
-											function callback(data, status) {
-											//when the thing comes back, update the DOM. 
-											if (status != 'success') {
-												console.log(status);
-											} else {
-												console.log(status);
-												callback(null, null);
-											}
-										});
+										// 	$.get('/createTransaction',
+										// 	{
+										// 		username : data.session.username,
+										// 		game_id : data.session.games[i].id
+										// 	},
+										// 	function callback(data, status) {
+										// 	//when the thing comes back, update the DOM. 
+										// 	if (status != 'success') {
+										// 		console.log(status);
+										// 	} else {
+										// 		console.log(status);
+										// 	}
+										// });
+											console.log('transaction created');
 										}
 									}
 
