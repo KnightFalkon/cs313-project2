@@ -14,7 +14,7 @@
 								console.log(status);
 							} else {
 								person.append('<h3>Update your information, so we can send you sweet games!</h3>');
-								person.append('<form  action="/updatePerson" method="post">');
+								person.append('<form  action="/updatePerson" method="POST">');
 								person.append('<div class="row pad">');
 								person.append('<label for="name">name:</label>');
 								person.append('<input type="text" name="name" id="name" value="' + data.name +'" pattern="^[a-z*A-Z*\s]{1,50}$" title="You sure that is your name??">');
