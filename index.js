@@ -29,6 +29,7 @@ app.post('/login', function(req, res) {
       res.render('pages/browse');
     }
     else {
+			res.render('pages/signin');
       res.status(401).send({message: 'Username or Password is incorrect'});
     }
   });
