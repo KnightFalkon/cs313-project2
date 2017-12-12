@@ -43,7 +43,7 @@
 
 		function getGames() {
 			var games = $("#games");
-			$.get('/getGames',
+			$.get('/getUsersGames',
 				0,
 				function callback(data, status) {
 					if(status != "success") {
